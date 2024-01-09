@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Game.Runtime.Core.Components
 {
     [RequireComponent(typeof(Rigidbody))]
-    public class MovingEngine : MonoBehaviour
+    public class PhysicsMovingEngine : MonoBehaviour
     {
         public float Speed => new Vector2(_rb.velocity.x, _rb.velocity.z).magnitude;
         

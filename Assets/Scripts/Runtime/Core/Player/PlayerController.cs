@@ -1,4 +1,10 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Game.Runtime.Core.Components;
+using Game.Runtime.Core.Damage;
+using Game.Runtime.Core.FSM.Player;
+using Game.Runtime.Core.FSM.Player.States;
 using Game.Runtime.Data.Configs;
 using Game.Runtime.Services;
 using UnityEngine;
@@ -6,17 +12,27 @@ using VContainer;
 
 namespace Game.Runtime.Core.Player
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, IPlayerSwitchContext, IPlayerAgent, IDamageTarget
     {
         [field: SerializeField] public Transform TargetPoint { get; private set; }
-        [field: SerializeField] public MovingEngine Engine{ get; private set; }
-        [field: SerializeField] public CharacterView View{ get; private set; }
-        
-        [SerializeField] private PlayerConfig _config;
+        [field: SerializeField] public PhysicsMovingEngine Engine { get; private set; }
+        [field: SerializeField] public CharacterView View { get; private set; }
+        [field: SerializeField] public PlayerConfig Config { get; private set; }
+        [field: SerializeField] public HealthComponent Health { get; private set; }
+        public CharacterStats Stats => _stats;
+
+        IInputService IPlayerAgent.Input => _input;
+        Transform IPlayerAgent.MyTransform => transform;
+        Vector3 IDamageTarget.Position => transform.position;
+        bool IDamageTarget.IsAlive => Health.IsAlive;
         
         private IInputService _input;
-        private Transform _cameraMain;
-        private Vector3 _moveDirection;
+        private CharacterStats _stats;
+        private List<BasePlayerState> _allStates;
+        private BasePlayerState _currentState;
+
+        public event Action OnDieEvent;
+        public event Action OnDamageEvent;
 
         [Inject]
         private void Construct(IInputService input)
@@ -25,34 +41,54 @@ namespace Game.Runtime.Core.Player
         }
 
         private void Awake() 
-        {
-            _cameraMain = Camera.main.transform;   
-        }      
+        { 
+            _stats = new CharacterStats();
+            
+            _allStates = new List<BasePlayerState>()
+            {
+                new PlayerIdleState(this, this),
+                new PlayerMoveState(this, this),
+                new PlayerAttackState(this, this),
+                new PlayerSpecialAttackState(this, this),
+                new PlayerDamageState(this, this),
+                new PlayerDieState(this, this)
+            };
 
-        public Vector3 GetRelativeCameraDirection()
-        {         
-            var camForward = _cameraMain.forward;           
-            var camRight = _cameraMain.right;           
-            camForward.y = camRight.y = 0f;
-
-            camForward.Normalize();
-            camRight.Normalize();
-
-            var vectorRotateToCameraSpace = _input.Movement.y * camForward + _input.Movement.x * camRight;       
-
-            return vectorRotateToCameraSpace;
-        }
+            _currentState = _allStates[0];
+            _currentState.OnEnter();
+        }    
 
         private void FixedUpdate() 
         {
-            _moveDirection = GetRelativeCameraDirection();
-            Engine.Move(_moveDirection, _config.Moving);            
+            _currentState?.OnFixedUpdate();           
         }
 
         private void Update() 
         {
-            View.RotateFromDirection(_moveDirection, _config.Rotation);
-            View.SetSpeed(Engine.Speed);
+            _currentState?.OnUpdate();
+            _stats?.RestoreSpecialAttackCooldown();            
+        }
+
+        void IPlayerSwitchContext.SwitchState<T>()
+        {
+            var state = _allStates.FirstOrDefault(s => s is T);
+
+            _currentState?.OnExit();
+            _currentState = state;
+            _currentState?.OnEnter();
+        }
+       
+        void IDamageTarget.ApplyDamage(float damage)
+        {
+            Health.Value -= damage;
+
+            if (Health.IsAlive)
+            {
+                OnDamageEvent?.Invoke();
+                return;
+            }
+
+            OnDieEvent.Invoke();
         }
     }
 }
