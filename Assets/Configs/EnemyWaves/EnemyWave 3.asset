@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e78296ea9843bb289e18ba91014d022, type: 3}
+  m_Name: EnemyWave 3
+  m_EditorClassIdentifier: 
+  <EnemyPrefabs>k__BackingField:
+  - {fileID: 392849997087292769, guid: b79d78372a40eb1dc83c3bbbe5b580e9, type: 3}
+  <CountCurve>k__BackingField:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.20634636
+      value: 0.33284938
+      inSlope: -0.516671
+      outSlope: -0.516671
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.085639894
+    - serializedVersion: 3
+      time: 0.4317411
+      value: 0.113589466
+      inSlope: 0.51827157
+      outSlope: 0.51827157
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5755316
+      value: 0.4986329
+      inSlope: 2.218736
+      outSlope: 2.218736
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.816833
+      value: 0.38043112
+      inSlope: -1.3853271
+      outSlope: -1.3853271
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  <Duration>k__BackingField: 2
+  <MaxCount>k__BackingField: 20

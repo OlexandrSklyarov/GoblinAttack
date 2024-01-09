@@ -7,5 +7,10 @@ namespace GameRuntime.Data
         {
             public const string GAME = "Game";
         }
+
+        public static class Animation
+        {
+            public const string SPEED = "Speed";
+        }
     }
 }

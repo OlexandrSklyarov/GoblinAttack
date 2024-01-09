@@ -12,3 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bacfe0295d217169090b2bc51e9708d5, type: 3}
   m_Name: MainConfig
   m_EditorClassIdentifier: 
+  <PlayerPrefab>k__BackingField: {fileID: 7838424191186095305, guid: 92e82f1f2af4641c8adf0a48f2b01d84,
+    type: 3}
+  <EnemyManager>k__BackingField:
+    <Waves>k__BackingField:
+    - {fileID: 11400000, guid: a3f0aa6a902a583d8b1be5cb7a1198b4, type: 2}
+    - {fileID: 11400000, guid: 95383dc7b63a00ef48f454351ad0d1f7, type: 2}
+    - {fileID: 11400000, guid: 11164fcaa7fdf18ae90043e95976a000, type: 2}
