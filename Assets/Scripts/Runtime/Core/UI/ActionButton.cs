@@ -1,10 +1,12 @@
+using DG.Tweening;
 using Game.Runtime.Util.Extensions;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Game.Runtime.UI
 {
-    public class ActionButton : MonoBehaviour
+    public class ActionButton : MonoBehaviour, IPointerDownHandler
     {
         [SerializeField] private Image _bg;
         [SerializeField] private Image _icon;
@@ -20,6 +22,12 @@ namespace Game.Runtime.UI
             _fill.fillAmount = progress;
             _icon.color.SetAlpha(progress);
             _bg.color.SetAlpha(progress);
+        }
+
+        void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
+        {
+            transform.DOScale(Vector3.one * 0.7f,  0.05f)
+                .OnComplete(() => transform.DOScale(Vector3.one,  0.05f));
         }
     }
 }

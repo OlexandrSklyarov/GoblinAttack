@@ -465,7 +465,7 @@ PrefabInstance:
     - target: {fileID: 3361936048206359742, guid: ed019ddb19d90abf288225956103ae15,
         type: 3}
       propertyPath: m_Name
-      value: SuperAttackActionButton (1)
+      value: SpecialAttackButton
       objectReference: {fileID: 0}
     - target: {fileID: 6274441030597005825, guid: ed019ddb19d90abf288225956103ae15,
         type: 3}
@@ -600,7 +600,7 @@ PrefabInstance:
     - target: {fileID: 3361936048206359742, guid: ed019ddb19d90abf288225956103ae15,
         type: 3}
       propertyPath: m_Name
-      value: AttackActionButton
+      value: AttackButton
       objectReference: {fileID: 0}
     - target: {fileID: 6274441030597005825, guid: ed019ddb19d90abf288225956103ae15,
         type: 3}

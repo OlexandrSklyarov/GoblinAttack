@@ -26,18 +26,19 @@ namespace Game
 
         private void RegisterInput(IContainerBuilder builder)
         {
-        #if UNITY_EDITOR
+        // #if UNITY_EDITOR || UNITY_STANDALONE
 
-            var mobileInput = FindObjectOfType<MobileInput>(true);
-            if (mobileInput != null) mobileInput.Hide();
+        //     var mobileInput = FindObjectOfType<MobileInput>(true);
+        //     if (mobileInput != null) mobileInput.Hide();
 
-            builder.Register<IInputService, DeviceInput>(Lifetime.Singleton);
+        //     builder.Register<IInputService, DeviceInput>(Lifetime.Singleton);
         
-        #elif UNITY_ANDROID
+        // #elif UNITY_ANDROID
 
+        //     builder.RegisterComponentInHierarchy<MobileInput>().AsImplementedInterfaces();
+
+        // #endif
             builder.RegisterComponentInHierarchy<MobileInput>().AsImplementedInterfaces();
-
-        #endif
         }
     }
 }
