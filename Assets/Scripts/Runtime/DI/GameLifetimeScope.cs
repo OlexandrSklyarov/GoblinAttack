@@ -21,8 +21,9 @@ namespace Game.Runtime.DI
         {
             builder.RegisterInstance(_mainConfig);
 
-            builder.Register(container => 
-                container.Instantiate(_mainConfig.PlayerPrefab, _playerSpawnPoint), Lifetime.Singleton).AsSelf();
+            builder.Register(container => container.Instantiate(_mainConfig.PlayerPrefab, _playerSpawnPoint), Lifetime.Singleton)
+                .AsImplementedInterfaces()
+                .AsSelf();
 
             builder.Register<ISceneService, SceneService>(Lifetime.Singleton);
             builder.Register<IObjectResolver, Container>(Lifetime.Singleton);

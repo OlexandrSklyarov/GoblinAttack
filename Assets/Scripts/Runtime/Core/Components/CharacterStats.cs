@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game.Runtime.Core.Components
 {
-    public class CharacterStats : ICharacterStats
+    public class CharacterStats
     {
 
         public float SpecialAttackCooldown 
@@ -12,14 +12,14 @@ namespace Game.Runtime.Core.Components
             private set 
             {
                 _specialAttackCooldown = value;
-                ChangedSpecialAttackCooldownEvent?.Invoke(_specialAttackCooldown / _maxSpecialAttackCooldown);
+                ChangeSpecialAttackCooldownEvent?.Invoke(_specialAttackCooldown / _maxSpecialAttackCooldown);
             }
         }   
 
         private float _maxSpecialAttackCooldown;
         private float _specialAttackCooldown;
 
-        public event Action<float> ChangedSpecialAttackCooldownEvent;
+        public event Action<float> ChangeSpecialAttackCooldownEvent;
         
         public void AddSpecialAttackCooldown(float value)
         {

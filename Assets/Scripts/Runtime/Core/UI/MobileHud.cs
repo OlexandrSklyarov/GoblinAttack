@@ -1,6 +1,5 @@
 using Game.Runtime.Core.Player;
 using Game.Runtime.UI;
-using TMPro;
 using UnityEngine;
 using VContainer;
 
@@ -11,15 +10,15 @@ namespace Game.Runtime.Core.UI
         [SerializeField] private ActionButton _specialAttackButton; 
 
         [Inject]
-        private void Construct(PlayerController player)
+        private void Construct(IPlayerChangeStats playerStats)
         {
-            player.Stats.ChangedSpecialAttackCooldownEvent += ChangeSpecialAttackProgress;  
-            player.Health.ChangeValueEvent += OnChangeHealth; 
+            playerStats.ChangedSpecialAttackCooldownEvent += ChangeSpecialAttackProgress;  
+            playerStats.ChangedHealthEvent += OnChangeHealth; 
         } 
 
-        private void OnChangeHealth(float currentValue, float maxValue)
+        private void OnChangeHealth(float progress)
         {
-            _hpBar.SetProgress(currentValue / maxValue);
+            _hpBar.SetProgress(progress);
         }
 
         private void ChangeSpecialAttackProgress(float progress)

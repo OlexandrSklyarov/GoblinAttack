@@ -10,10 +10,10 @@ namespace Game.Runtime.Core.UI
         [SerializeField] protected Image _attackCooldownBar;
        
         [Inject]
-        private void Construct(PlayerController player)
+        private void Construct(IPlayerChangeStats playerStats)
         {
-            player.Stats.ChangedSpecialAttackCooldownEvent += ChangeSpecialAttackProgress;  
-            player.Health.ChangeValueEvent += OnChangeHealth; 
+            playerStats.ChangedSpecialAttackCooldownEvent += ChangeSpecialAttackProgress;  
+            playerStats.ChangedHealthEvent += OnChangeHealth; 
         }       
         
         private void ChangeSpecialAttackProgress(float progress)
@@ -21,9 +21,9 @@ namespace Game.Runtime.Core.UI
             _attackCooldownBar.fillAmount = 1f - progress;
         }
 
-        private void OnChangeHealth(float currentValue, float maxValue)
+        private void OnChangeHealth(float progress)
         {
-            _hpBar.SetProgress(currentValue / maxValue);
+            _hpBar.SetProgress(progress);
         }
     }
 }

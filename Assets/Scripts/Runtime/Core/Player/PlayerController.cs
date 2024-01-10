@@ -12,7 +12,8 @@ using VContainer;
 
 namespace Game.Runtime.Core.Player
 {
-    public class PlayerController : MonoBehaviour, IPlayerSwitchContext, IPlayerAgent, IDamageTarget
+    public class PlayerController : MonoBehaviour, IPlayerSwitchContext, IPlayerAgent, IDamageTarget, 
+        IPlayerChangeStats
     {
         [field: SerializeField] public Transform TargetPoint { get; private set; }
         [field: SerializeField] public PhysicsMovingEngine Engine { get; private set; }
@@ -33,6 +34,8 @@ namespace Game.Runtime.Core.Player
 
         public event Action OnDieEvent;
         public event Action OnDamageEvent;
+        public event Action<float> ChangedSpecialAttackCooldownEvent;
+        public event Action<float> ChangedHealthEvent;
 
         [Inject]
         private void Construct(IInputService input)
@@ -40,10 +43,18 @@ namespace Game.Runtime.Core.Player
             _input = input;
         }
 
-        private void Awake() 
-        { 
+        private void Awake()
+        {
             _stats = new CharacterStats();
-            
+
+            _stats.ChangeSpecialAttackCooldownEvent += (v) => ChangedSpecialAttackCooldownEvent?.Invoke(v);
+            Health.ChangeValueEvent += (cur, max) => ChangedSpecialAttackCooldownEvent?.Invoke(cur / max);
+
+            InitFSM();
+        }
+
+        private void InitFSM()
+        {
             _allStates = new List<BasePlayerState>()
             {
                 new PlayerIdleState(this, this),
@@ -56,7 +67,7 @@ namespace Game.Runtime.Core.Player
 
             _currentState = _allStates[0];
             _currentState.OnEnter();
-        }    
+        }
 
         private void FixedUpdate() 
         {
