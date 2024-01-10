@@ -5,7 +5,6 @@ namespace Game.Runtime.Core.Components
 {
     public class CharacterStats
     {
-
         public float SpecialAttackCooldown 
         {
             get => _specialAttackCooldown;

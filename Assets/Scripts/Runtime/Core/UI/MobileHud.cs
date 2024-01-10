@@ -24,6 +24,6 @@ namespace Game.Runtime.Core.UI
         private void ChangeSpecialAttackProgress(float progress)
         {
             _specialAttackButton.SetActiveProgress(1f - progress);
-        }
+        }        
     }
 }

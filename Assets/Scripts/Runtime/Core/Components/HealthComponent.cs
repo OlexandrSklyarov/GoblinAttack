@@ -36,7 +36,7 @@ namespace Game.Runtime.Core.Components
         {
             if (value < 0f)
             {
-                Debug.LogWarning($"max hp value  {value} < 0!!!");
+                Debug.LogWarning($"Value cannot be less than zero!!! value ({value})");
                 return;
             }
 

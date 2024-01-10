@@ -1,5 +1,5 @@
 using Cinemachine;
-using Game.Runtime.Core.Player;
+using Game.Runtime.Core.Enemies;
 using Game.Runtime.Core.UI;
 using Game.Runtime.Data.Configs;
 using Game.Runtime.Services;
@@ -20,32 +20,49 @@ namespace Game.Runtime.DI
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterInstance(_mainConfig);
-
-            builder.Register(container => container.Instantiate(_mainConfig.PlayerPrefab, _playerSpawnPoint), Lifetime.Singleton)
-                .AsImplementedInterfaces()
-                .AsSelf();
+            
+            RegisterPlayer(builder);
 
             builder.Register<ISceneService, SceneService>(Lifetime.Singleton);
             builder.Register<IObjectResolver, Container>(Lifetime.Singleton);
+            builder.Register<EnemySpawnController>(Lifetime.Singleton).AsSelf();
 
             builder.RegisterComponentInHierarchy<CinemachineVirtualCamera>().AsSelf();
 
             builder.Register<IInputService, DeviceInput>(Lifetime.Singleton);
-            
+
             RegisterHUD(builder);
+        }
+
+        private void RegisterPlayer(IContainerBuilder builder)
+        {
+            builder.Register(container => container.Instantiate(_mainConfig.PlayerPrefab, _playerSpawnPoint), Lifetime.Singleton)
+                .AsImplementedInterfaces()
+                .AsSelf();
         }
 
         private void RegisterHUD(IContainerBuilder builder)
         {
+            builder.RegisterComponentInHierarchy<MainHud>()
+                .AsImplementedInterfaces()
+                .AsSelf();
+
+
         #if UNITY_EDITOR || UNITY_STANDALONE
 
             _mobileHud.Hide();
-            builder.RegisterComponent(_defaultHud);
+
+            builder.RegisterComponent(_defaultHud)
+                .AsImplementedInterfaces()
+                .AsSelf();
         
         #elif UNITY_ANDROID
 
             _defaultHud.Hide();
-            builder.RegisterComponent(_mobileHud);
+
+            builder.RegisterComponent(_mobileHud)
+                .AsImplementedInterfaces()
+                .AsSelf();
             
         #endif
         }

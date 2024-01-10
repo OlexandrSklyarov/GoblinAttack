@@ -12,8 +12,8 @@ using VContainer;
 
 namespace Game.Runtime.Core.Player
 {
-    public class PlayerController : MonoBehaviour, IPlayerSwitchContext, IPlayerAgent, IDamageTarget, 
-        IPlayerChangeStats
+    public class PlayerController : MonoBehaviour, IPlayerSwitchContext, IPlayerAgent, 
+        IPlayerDamageTarget, IPlayerChangeStats
     {
         [field: SerializeField] public Transform TargetPoint { get; private set; }
         [field: SerializeField] public PhysicsMovingEngine Engine { get; private set; }
