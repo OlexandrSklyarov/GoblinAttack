@@ -11,7 +11,7 @@ namespace Game.Runtime.Core.FSM.Player.States
         {            
             base.OnEnter();
 
-            _agent.Stats.AddSpecialAttackCooldown(_agent.Config.Attack.SuperAttackCooldown);
+            _agent.Stats.AddSpecialAttackCooldown(_agent.Config.Attack.SpecialAttackCooldown);
             _agent.View.PlaySpecialAttack();
         }        
     }

@@ -8,7 +8,7 @@ namespace Game
     {
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.Register<ISceneService, SceneService>(Lifetime.Singleton);
+            builder.Register<ISceneService, SceneService>(Lifetime.Scoped);
         }
     }
 }

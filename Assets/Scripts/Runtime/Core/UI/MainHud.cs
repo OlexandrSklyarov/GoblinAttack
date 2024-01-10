@@ -12,6 +12,11 @@ namespace Game.Runtime.Core.UI
         [SerializeField] BaseHud[] _subHuds;
 
         public event Action OnPressedRestartEvent;
+
+        private void Awake() 
+        {
+            _restartButton.onClick.AddListener(() => OnPressedRestartEvent?.Invoke());    
+        }
         
         void IMainHUD.Hide()
         {

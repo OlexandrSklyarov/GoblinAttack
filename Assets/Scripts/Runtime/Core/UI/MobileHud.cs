@@ -12,9 +12,15 @@ namespace Game.Runtime.Core.UI
         [Inject]
         private void Construct(IPlayerChangeStats playerStats)
         {
-            playerStats.ChangedSpecialAttackCooldownEvent += ChangeSpecialAttackProgress;  
+            playerStats.RestoreSpecialAttackEvent += ChangeSpecialAttackProgress;  
+            playerStats.ChangeSpecialAttackStatusEvent += ChangeSpecialAttackStatus;  
             playerStats.ChangedHealthEvent += OnChangeHealth; 
-        } 
+        }
+
+        private void ChangeSpecialAttackStatus(bool isActive)
+        {
+            _specialAttackButton.SetActiveInteraction(isActive);
+        }
 
         private void OnChangeHealth(float progress)
         {

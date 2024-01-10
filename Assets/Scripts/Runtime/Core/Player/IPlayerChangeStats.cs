@@ -4,7 +4,8 @@ namespace Game.Runtime.Core.Player
 {
     public interface IPlayerChangeStats
     {
-        event Action<float> ChangedSpecialAttackCooldownEvent;
+        event Action<float> RestoreSpecialAttackEvent;
         event Action<float> ChangedHealthEvent;
+        event Action<bool> ChangeSpecialAttackStatusEvent;
     }
 }

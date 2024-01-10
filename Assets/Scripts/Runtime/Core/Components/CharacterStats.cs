@@ -11,14 +11,14 @@ namespace Game.Runtime.Core.Components
             private set 
             {
                 _specialAttackCooldown = value;
-                ChangeSpecialAttackCooldownEvent?.Invoke(_specialAttackCooldown / _maxSpecialAttackCooldown);
+                RestoreSpecialAttackEvent?.Invoke(_specialAttackCooldown / _maxSpecialAttackCooldown);
             }
         }   
 
         private float _maxSpecialAttackCooldown;
         private float _specialAttackCooldown;
 
-        public event Action<float> ChangeSpecialAttackCooldownEvent;
+        public event Action<float> RestoreSpecialAttackEvent;
         
         public void AddSpecialAttackCooldown(float value)
         {

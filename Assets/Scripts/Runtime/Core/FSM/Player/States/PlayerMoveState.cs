@@ -32,7 +32,7 @@ namespace Game.Runtime.Core.FSM.Player.States
                 return;
             }
 
-            if (_agent.Input.IsSpecialAttack && _agent.Stats.SpecialAttackCooldown <= 0f)
+            if (_agent.Input.IsSpecialAttack && _agent.IsCanUseSpecialAttack)
             {
                 _context.SwitchState<PlayerSpecialAttackState>();
                 return;

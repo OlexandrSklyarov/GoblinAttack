@@ -23,7 +23,7 @@ namespace Game.Runtime.DI
             
             RegisterPlayer(builder);
 
-            builder.Register<ISceneService, SceneService>(Lifetime.Singleton);
+            builder.Register<ISceneService, SceneService>(Lifetime.Scoped);
             builder.Register<IObjectResolver, Container>(Lifetime.Singleton);
             builder.Register<EnemySpawnController>(Lifetime.Singleton).AsSelf();
 

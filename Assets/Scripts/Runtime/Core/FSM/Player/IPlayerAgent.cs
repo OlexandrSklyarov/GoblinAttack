@@ -8,6 +8,7 @@ namespace Game.Runtime.Core.FSM.Player
 {
     public interface IPlayerAgent
     {
+        TargetSensor TargetSensor {get;}
         PhysicsMovingEngine Engine{ get; }
         CharacterView View{ get; }   
         PlayerConfig Config { get; }     
@@ -18,5 +19,6 @@ namespace Game.Runtime.Core.FSM.Player
 
         IInputService Input { get; }
         Transform MyTransform { get; }
+        bool IsCanUseSpecialAttack { get; }
     }
 }

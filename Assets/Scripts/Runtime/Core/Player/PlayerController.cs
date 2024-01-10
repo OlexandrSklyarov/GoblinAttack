@@ -21,21 +21,25 @@ namespace Game.Runtime.Core.Player
         [field: SerializeField] public PlayerConfig Config { get; private set; }
         [field: SerializeField] public HealthComponent Health { get; private set; }
         public CharacterStats Stats => _stats;
+        public TargetSensor TargetSensor => _targetSensor;
 
         IInputService IPlayerAgent.Input => _input;
         Transform IPlayerAgent.MyTransform => transform;
         Vector3 IDamageTarget.Position => transform.position;
         bool IDamageTarget.IsAlive => Health.IsAlive;
-        
+        bool IPlayerAgent.IsCanUseSpecialAttack => _stats.SpecialAttackCooldown <= 0f && _targetSensor.IsTargetExist;
+
         private IInputService _input;
         private CharacterStats _stats;
+        private TargetSensor _targetSensor;
         private List<BasePlayerState> _allStates;
         private BasePlayerState _currentState;
 
         public event Action OnDieEvent;
         public event Action OnDamageEvent;
-        public event Action<float> ChangedSpecialAttackCooldownEvent;
+        public event Action<float> RestoreSpecialAttackEvent;
         public event Action<float> ChangedHealthEvent;
+        public event Action<bool> ChangeSpecialAttackStatusEvent;
 
         [Inject]
         private void Construct(IInputService input)
@@ -45,12 +49,18 @@ namespace Game.Runtime.Core.Player
 
         private void Awake()
         {
+            _targetSensor = new TargetSensor(transform, Config.Attack);
             _stats = new CharacterStats();
 
-            _stats.ChangeSpecialAttackCooldownEvent += (v) => ChangedSpecialAttackCooldownEvent?.Invoke(v);
-            Health.ChangeValueEvent += (cur, max) => ChangedSpecialAttackCooldownEvent?.Invoke(cur / max);
-
+            BindEvents();
             InitFSM();
+        }
+
+        private void BindEvents()
+        {
+            _stats.RestoreSpecialAttackEvent += (v) => RestoreSpecialAttackEvent?.Invoke(v);
+            Health.ChangeValueEvent += (cur, max) => ChangedHealthEvent?.Invoke(cur / max);
+            _targetSensor.ScanTargetResultEvent += (isActive) => ChangeSpecialAttackStatusEvent?.Invoke(isActive);
         }
 
         private void InitFSM()
@@ -76,6 +86,7 @@ namespace Game.Runtime.Core.Player
 
         private void Update() 
         {
+            _targetSensor?.ScanTargets();            
             _currentState?.OnUpdate();
             _stats?.RestoreSpecialAttackCooldown();            
         }

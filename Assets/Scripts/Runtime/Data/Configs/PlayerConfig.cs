@@ -7,8 +7,8 @@ namespace Game.Runtime.Data.Configs
     public class PlayerConfig : ScriptableObject
     {
         [field: SerializeField] public MovingConfig Moving {get; private set;}
-        [field: SerializeField] public RotationConfig Rotation {get; private set;}
-        [field: SerializeField] public AttackConfig Attack {get; private set;}
+        [field: Space, SerializeField] public RotationConfig Rotation {get; private set;}
+        [field: Space, SerializeField] public AttackConfig Attack {get; private set;}
     }
 
     [Serializable]
@@ -28,10 +28,11 @@ namespace Game.Runtime.Data.Configs
     [Serializable]
     public class AttackConfig
     {
-        [field: SerializeField, Min(1f)] public float Duration {get; private set;} = 2f;
-        [field: SerializeField, Min(1f)] public float SuperAttackCooldown {get; private set;} = 2f;
-        [field: SerializeField, Min(1f)] public float Range {get; private set;} = 2f;
         [field: SerializeField, Min(1f)] public float Damage {get; private set;} = 10f;
+        [field: SerializeField, Min(1f)] public float SpecialDamage {get; private set;} = 20f;
+        [field: SerializeField, Min(1f)] public float SpecialAttackCooldown {get; private set;} = 2f;
+        [field: SerializeField, Min(1f)] public float Range {get; private set;} = 2f;
+        [field: SerializeField, Min(0.01f)] public float ScanTargetDelay {get; private set;} = 0.5f;
         [field: SerializeField] public LayerMask TargetLayer {get; private set;}
     }
 }
