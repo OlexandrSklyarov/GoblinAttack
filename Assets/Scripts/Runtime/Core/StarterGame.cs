@@ -19,6 +19,7 @@ namespace Game.Runtime.Core
         private EnemySpawnController _enemySpawnController;
         private IMainHUD _mainHud;
         private ISceneService _sceneService;
+        private IInputService _inputService;
 
         public event Action GameWinEvent;
         public event Action GameLossEvent;
@@ -30,7 +31,8 @@ namespace Game.Runtime.Core
             CinemachineVirtualCamera camera,
             EnemySpawnController enemySpawnController,
             IMainHUD mainHud,
-            ISceneService sceneService)
+            ISceneService sceneService,
+            IInputService inputService)
         {
             _player = player;
             _mainConfig = mainConfig;
@@ -38,6 +40,7 @@ namespace Game.Runtime.Core
             _enemySpawnController = enemySpawnController;
             _mainHud = mainHud;
             _sceneService = sceneService;
+            _inputService = inputService;
         }
 
         private void Start() 
@@ -50,7 +53,7 @@ namespace Game.Runtime.Core
 
             _player.OnDieEvent += OnLoss;
 
-            _enemySpawnController.StartSpawn();
+            _enemySpawnController.StartSpawnAsync();
             _enemySpawnController.AllUnitsKillEvent += OnWin;
         }
 
@@ -62,23 +65,28 @@ namespace Game.Runtime.Core
 
         private void OnWin()
         {
-            _enemySpawnController.AllUnitsKillEvent -= OnWin;
-            _player.OnDieEvent -= OnLoss;
+            StopGame();
 
             _mainHud.ShowWinMsg();
-
             GameWinEvent?.Invoke();
         }
 
         private void OnLoss()
         {
+            StopGame();
+            
+            _mainHud.ShowLossMsg();
+            GameLossEvent?.Invoke();
+        }
+
+        private void StopGame()
+        {
             _enemySpawnController.AllUnitsKillEvent -= OnWin;
             _player.OnDieEvent -= OnLoss;
 
-            _mainHud.ShowLossMsg();
-
             _enemySpawnController.StopSpawn();
-            GameLossEvent?.Invoke();
+
+            _inputService.Disable();
         }
     }
 }

@@ -46,23 +46,29 @@ namespace Game.Runtime.DI
                 .AsSelf();
 
 
-        #if UNITY_EDITOR || UNITY_STANDALONE
+        // #if UNITY_EDITOR || UNITY_STANDALONE
 
-            _mobileHud.Hide();
+        //     _mobileHud.Hide();
 
-            builder.RegisterComponent(_pcHud)
-                .AsImplementedInterfaces()
-                .AsSelf();
+        //     builder.RegisterComponent(_pcHud)
+        //         .AsImplementedInterfaces()
+        //         .AsSelf();
         
-        #elif UNITY_ANDROID
+        // #elif UNITY_ANDROID
 
-            _defaultHud.Hide();
+        //     _pcHud.Hide();
+
+        //     builder.RegisterComponent(_mobileHud)
+        //         .AsImplementedInterfaces()
+        //         .AsSelf();
+            
+        // #endif
+
+            _pcHud.Hide();
 
             builder.RegisterComponent(_mobileHud)
                 .AsImplementedInterfaces()
                 .AsSelf();
-            
-        #endif
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using Game.Runtime.Core.Components;
 using Game.Runtime.Core.Damage;
 using Game.Runtime.Data.Configs;
@@ -13,6 +14,8 @@ namespace Game.Runtime.Core.Enemies
         [SerializeField] private EnemyUnitConfig _config;
         [SerializeField] private HealthComponent _health;
 
+        public event Action<EnemyUnit> DieEvent;
+
         private void Awake() 
         {
             Init();    
@@ -23,11 +26,18 @@ namespace Game.Runtime.Core.Enemies
             _health.Restore();    
         }
 
-
         void IDamageTarget.ApplyDamage(float damage)
         {
             Debug.Log($"damage {damage}");
             _health.Value -= damage;
+        }
+
+        public void OnUpdate()
+        {            
+        }
+
+        public void OnFixedUpdate()
+        {
         }
     }
 }

@@ -16,5 +16,15 @@ namespace Game.Runtime.Services
             _inputAction = new PlayerInputActions();
             _inputAction.Enable();
         }
+
+        void IInputService.Enable()
+        {
+            _inputAction.Enable();
+        }
+
+        void IInputService.Disable()
+        {
+            _inputAction.Disable();
+        }
     }
 }

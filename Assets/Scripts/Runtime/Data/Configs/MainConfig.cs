@@ -2,6 +2,7 @@ using UnityEngine;
 using Game.Runtime.Core.Player;
 using System;
 using Game.Runtime.Core.UI;
+using Game.Runtime.Util.Data.DataStruct;
 
 namespace Game.Runtime.Data.Configs
 {
@@ -17,6 +18,7 @@ namespace Game.Runtime.Data.Configs
     public class EnemyManagerConfig
     {
         [field: SerializeField] public EnemyWave[] Waves {get; private set;}
+        [field: SerializeField] public RangeFloatValue SpawnRadius{get; private set;} = new RangeFloatValue(5f, 15f);
     }
 
     [Serializable]

@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hpBar: {fileID: 5078002881215361330}
-  _waveText: {fileID: 0}
+  _waveText: {fileID: 534941789594632204}
   _specialAttackButton: {fileID: 4693597495936114680}
 --- !u!1 &5306293137713823716
 GameObject:
