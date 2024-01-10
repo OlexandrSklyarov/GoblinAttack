@@ -137,7 +137,7 @@ MonoBehaviour:
   <View>k__BackingField: {fileID: 5511533379082469265}
   <Config>k__BackingField: {fileID: 11400000, guid: fca6e311126b62910a2f54bfab9a0e72,
     type: 2}
-  _health: {fileID: 7596369789816290121}
+  <Health>k__BackingField: {fileID: 7596369789816290121}
 --- !u!114 &1576735559216766148
 MonoBehaviour:
   m_ObjectHideFlags: 0

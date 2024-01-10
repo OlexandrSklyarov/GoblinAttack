@@ -13,7 +13,7 @@ namespace Game.Runtime.Core.Components
             set 
             {
                 _currentHP = Mathf.Clamp(value, 0f, _maxHP);  
-                ChangeValueEvent?.Invoke(_currentHP);
+                ChangeValueEvent?.Invoke(_currentHP, _maxHP);
             }          
         }
 
@@ -21,7 +21,7 @@ namespace Game.Runtime.Core.Components
 
         private float _currentHP;
 
-        public event Action<float> ChangeValueEvent;
+        public event Action<float, float> ChangeValueEvent;
 
         private void Awake() 
         {

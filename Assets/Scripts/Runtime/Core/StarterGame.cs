@@ -1,4 +1,5 @@
 using Cinemachine;
+using Game.Runtime.Core.Player;
 using Game.Runtime.Data.Configs;
 using UnityEngine;
 using VContainer;
@@ -8,29 +9,25 @@ namespace Game.Runtime.Core
 {
     public class StarterGame : MonoBehaviour
     {
-        [SerializeField] private Transform _playerSpawnPoint;
-
-        private IObjectResolver _resolver;
+        private PlayerController _player;
         private MainConfig _mainConfig;
         private CinemachineVirtualCamera _camera;
 
-        [Inject]
+        [Inject()]
         private void Construct(
-            IObjectResolver resolver, 
+            PlayerController player, 
             MainConfig mainConfig,
             CinemachineVirtualCamera camera)
         {
-            _resolver = resolver;
+            _player = player;
             _mainConfig = mainConfig;
             _camera = camera;
         }
 
         private void Start() 
         {
-            var player = _resolver.Instantiate(_mainConfig.PlayerPrefab, _playerSpawnPoint);     
-
-            _camera.Follow = player.TargetPoint;
-            _camera.LookAt = player.TargetPoint;
+            _camera.Follow = _player.TargetPoint;
+            _camera.LookAt = _player.TargetPoint;
         }
     }
 }

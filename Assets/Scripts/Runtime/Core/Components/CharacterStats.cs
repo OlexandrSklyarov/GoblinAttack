@@ -1,22 +1,37 @@
-using Game.Runtime.Util;
+using System;
 using UnityEngine;
 
 namespace Game.Runtime.Core.Components
 {
-    public class CharacterStats
+    public class CharacterStats : ICharacterStats
     {
-        public SimpleReactiveProperty<float> SpecialAttackCooldown {get; private set;} = new();     
+
+        public float SpecialAttackCooldown 
+        {
+            get => _specialAttackCooldown;
+            private set 
+            {
+                _specialAttackCooldown = value;
+                ChangedSpecialAttackCooldownEvent?.Invoke(_specialAttackCooldown / _maxSpecialAttackCooldown);
+            }
+        }   
+
+        private float _maxSpecialAttackCooldown;
+        private float _specialAttackCooldown;
+
+        public event Action<float> ChangedSpecialAttackCooldownEvent;
         
         public void AddSpecialAttackCooldown(float value)
         {
-            SpecialAttackCooldown.Value = value;
+            _maxSpecialAttackCooldown = value;
+            SpecialAttackCooldown = value;
         }
 
         public void RestoreSpecialAttackCooldown()
         {
-            if (SpecialAttackCooldown.Value > 0f)
+            if (SpecialAttackCooldown > 0f)
             {
-                SpecialAttackCooldown.Value -= Time.deltaTime;
+                SpecialAttackCooldown -= Time.deltaTime;
             }
         }
     }

@@ -1,8 +1,8 @@
 using DG.Tweening;
-using Game.Runtime.Util.Extensions;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Game.Runtime.Util.Extensions;
 
 namespace Game.Runtime.UI
 {
@@ -20,8 +20,7 @@ namespace Game.Runtime.UI
         public void SetActiveProgress(float progress)
         {
             _fill.fillAmount = progress;
-            _icon.color.SetAlpha(progress);
-            _bg.color.SetAlpha(progress);
+            _icon.SetAlpha(progress);
         }
 
         void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
