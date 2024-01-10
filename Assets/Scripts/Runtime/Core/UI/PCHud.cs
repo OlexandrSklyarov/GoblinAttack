@@ -1,20 +1,24 @@
+using System;
+using Game.Runtime.Core.Enemies;
 using Game.Runtime.Core.Player;
 using UnityEngine;
 using VContainer;
 
 namespace Game.Runtime.Core.UI
 {
-    public class Hud : BaseHud 
+    public class PCHud : BaseHud 
     {        
         [SerializeField] protected StatusIconView _attackCooldownBar;
        
         [Inject]
-        private void Construct(IPlayerChangeStats playerStats)
+        private void Construct(IPlayerChangeStats playerStats, IEnemyWaveInfo waveInfo)
         {
             playerStats.RestoreSpecialAttackEvent += ChangeSpecialAttackProgress;  
             playerStats.ChangeSpecialAttackStatusEvent += ChangeSpecialAttackStatus;  
             playerStats.ChangedHealthEvent += OnChangeHealth; 
-        }       
+
+            waveInfo.ChangeWaveProgressEvent += OnChangeWaveProgress;
+        }        
 
         private void ChangeSpecialAttackStatus(bool isActive)
         {
@@ -26,9 +30,6 @@ namespace Game.Runtime.Core.UI
             _attackCooldownBar.SetActiveProgress(1f - progress);
         }
 
-        private void OnChangeHealth(float progress)
-        {
-            _hpBar.SetProgress(progress);
-        }
+        
     }
 }

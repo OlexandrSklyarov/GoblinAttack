@@ -12,8 +12,8 @@ namespace Game.Runtime.DI
     public class GameLifetimeScope : LifetimeScope
     {
         [Space, SerializeField] private MainConfig _mainConfig;  
-        [SerializeField] private Transform _playerSpawnPoint;
-        [Space, SerializeField] private Hud _defaultHud;  
+        [Space, SerializeField] private Transform _playerSpawnPoint;
+        [Space, SerializeField] private PCHud _pcHud;  
         [SerializeField] private MobileHud _mobileHud;  
                 
 
@@ -21,25 +21,23 @@ namespace Game.Runtime.DI
         {
             builder.RegisterInstance(_mainConfig);
             
-            RegisterPlayer(builder);
-
             builder.Register<ISceneService, SceneService>(Lifetime.Scoped);
             builder.Register<IObjectResolver, Container>(Lifetime.Singleton);
-            builder.Register<EnemySpawnController>(Lifetime.Singleton).AsSelf();
-
-            builder.RegisterComponentInHierarchy<CinemachineVirtualCamera>().AsSelf();
-
             builder.Register<IInputService, DeviceInput>(Lifetime.Singleton);
 
-            RegisterHUD(builder);
-        }
+            builder.RegisterComponentInHierarchy<CinemachineVirtualCamera>()
+                .AsSelf();
 
-        private void RegisterPlayer(IContainerBuilder builder)
-        {
             builder.Register(container => container.Instantiate(_mainConfig.PlayerPrefab, _playerSpawnPoint), Lifetime.Singleton)
                 .AsImplementedInterfaces()
                 .AsSelf();
-        }
+
+            builder.Register<EnemySpawnController>(Lifetime.Singleton)
+                .AsImplementedInterfaces()
+                .AsSelf();
+
+            RegisterHUD(builder);
+        }       
 
         private void RegisterHUD(IContainerBuilder builder)
         {
@@ -52,7 +50,7 @@ namespace Game.Runtime.DI
 
             _mobileHud.Hide();
 
-            builder.RegisterComponent(_defaultHud)
+            builder.RegisterComponent(_pcHud)
                 .AsImplementedInterfaces()
                 .AsSelf();
         

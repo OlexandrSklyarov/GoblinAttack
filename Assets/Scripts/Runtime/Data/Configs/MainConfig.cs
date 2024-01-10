@@ -22,7 +22,7 @@ namespace Game.Runtime.Data.Configs
     [Serializable]
     public class UIConfig
     {
-        [field: SerializeField] public Hud DefaultHudPrefab {get; private set;}
+        [field: SerializeField] public PCHud PCHudPrefab {get; private set;}
         [field: SerializeField] public MobileHud MobileHudPrefab {get; private set;}
     }
 }

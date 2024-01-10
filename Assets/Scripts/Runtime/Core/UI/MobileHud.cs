@@ -1,3 +1,4 @@
+using Game.Runtime.Core.Enemies;
 using Game.Runtime.Core.Player;
 using Game.Runtime.UI;
 using UnityEngine;
@@ -10,21 +11,18 @@ namespace Game.Runtime.Core.UI
         [SerializeField] private ActionButton _specialAttackButton; 
 
         [Inject]
-        private void Construct(IPlayerChangeStats playerStats)
+        private void Construct(IPlayerChangeStats playerStats, IEnemyWaveInfo waveInfo)
         {
             playerStats.RestoreSpecialAttackEvent += ChangeSpecialAttackProgress;  
             playerStats.ChangeSpecialAttackStatusEvent += ChangeSpecialAttackStatus;  
             playerStats.ChangedHealthEvent += OnChangeHealth; 
+
+            waveInfo.ChangeWaveProgressEvent += OnChangeWaveProgress;
         }
 
         private void ChangeSpecialAttackStatus(bool isActive)
         {
             _specialAttackButton.SetActiveInteraction(isActive);
-        }
-
-        private void OnChangeHealth(float progress)
-        {
-            _hpBar.SetProgress(progress);
         }
 
         private void ChangeSpecialAttackProgress(float progress)

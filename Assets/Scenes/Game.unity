@@ -725,7 +725,7 @@ PrefabInstance:
     - target: {fileID: 8366013139637848737, guid: c60892c45dda578bb8482d427cb84acb,
         type: 3}
       propertyPath: m_Name
-      value: HUD
+      value: PC_HUD
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1649,7 +1649,7 @@ MonoBehaviour:
   - {fileID: 1141521956}
   _mainConfig: {fileID: 11400000, guid: 9bc331414b898b96aafba033c15ce031, type: 2}
   _playerSpawnPoint: {fileID: 1881642688}
-  _defaultHud: {fileID: 883307197}
+  _pcHud: {fileID: 883307197}
   _mobileHud: {fileID: 1325556779}
 --- !u!1 &8611912006090370775
 GameObject:
