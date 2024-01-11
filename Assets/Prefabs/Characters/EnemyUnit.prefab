@@ -100,6 +100,7 @@ MonoBehaviour:
   <Config>k__BackingField: {fileID: 11400000, guid: df3152ee44d44be719271919995b7a14,
     type: 2}
   <Health>k__BackingField: {fileID: -569049562709610895}
+  _collider: {fileID: 5710923808493311745}
 --- !u!114 &-569049562709610895
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -17,7 +17,6 @@ namespace Game.Runtime.Core.UI
 
         protected void OnChangeHealth(float progress)
         {
-            Debug.Log("OnChangeHealth");
             _hpBar.SetProgress(progress);
         }
 

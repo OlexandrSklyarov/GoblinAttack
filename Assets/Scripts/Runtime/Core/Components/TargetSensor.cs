@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using Game.Runtime.Core.Damage;
 using Game.Runtime.Data.Configs;
@@ -53,8 +54,16 @@ namespace Game.Runtime.Core.Components
                     .OrderBy(t => _owner.position.GetDistanceXZ(t.Position))
                     .ToList();
             }
-            
+
             ScanTargetResultEvent?.Invoke(IsTargetExist);
+        }       
+
+        public IEnumerable<IDamageTarget> FindTargetsInFront(IDamageTarget excludeTarget, Vector3 forward, float maxAngle)
+        {      
+            return _targets
+                .Where(x => x != null && x.IsAlive && x != excludeTarget)
+                .Where(x => Vector3.Angle(forward, x.Position - _owner.position) <= maxAngle * 0.5f)
+                .ToList();
         }
     }
 }

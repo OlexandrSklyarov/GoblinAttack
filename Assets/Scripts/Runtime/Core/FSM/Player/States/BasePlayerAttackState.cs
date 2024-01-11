@@ -1,5 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Game.Runtime.Core.Damage;
 using Game.Runtime.Util.Extensions;
+using UnityEngine;
 
 namespace Game.Runtime.Core.FSM.Player.States
 {
@@ -70,9 +74,22 @@ namespace Game.Runtime.Core.FSM.Player.States
             if (_currentTarget != null && _currentTarget.IsAlive && IsTargetNear())
             {
                 _currentTarget.ApplyDamage(_agent.Config.Attack.Damage);
+
+                TryApplyDamageOtherTargets(_currentTarget);
             }
         }
 
+        private void TryApplyDamageOtherTargets(IDamageTarget excludeTarget)
+        {
+            var targets = _agent.TargetSensor.FindTargetsInFront(excludeTarget, _agent.View.Forward, 60f);
+            
+            foreach (var target in targets)
+            {
+                var damage = _agent.Config.Attack.Damage * UnityEngine.Random.Range(0.1f, 0.5f);
+                target?.ApplyDamage(damage);
+            }           
+        }
+       
         private void RotateToCurrentTarget()
         {
             if (_currentTarget == null) return;

@@ -1,3 +1,4 @@
+using System;
 using Game.Runtime.Data.Configs;
 using UnityEngine;
 using UnityEngine.AI;
@@ -36,6 +37,16 @@ namespace Game.Runtime.Core.Components
         {
             if (_navAgent == null) return;
             _navAgent.isStopped = true;
-        }        
+        }
+
+        public void Enabled()
+        {
+            _navAgent.enabled = true;
+        }
+
+        public void Disable()
+        {
+            _navAgent.enabled = false;
+        }
     }
 }

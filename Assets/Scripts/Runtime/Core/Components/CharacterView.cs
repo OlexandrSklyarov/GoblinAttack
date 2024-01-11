@@ -22,6 +22,8 @@ namespace Game.Runtime.Core.Components
         private int _animDamagePRM;
         private int _animIsDeadPRM;
 
+        public Vector3 Forward => _body.forward;
+
         public event Action OnAttackExecuteEvent;
         public event Action OnAttackCompletedEvent;
         public event Action OnDamageCompletedEvent;

@@ -22,6 +22,8 @@ namespace Game.Runtime.Core.Enemies
         IPlayerDamageTarget IUnitAgent.MyTarget => _myTarget;
         Transform IUnitAgent.MyTransform => transform;
         Vector3 IDamageTarget.Position => transform.position;
+
+        [SerializeField] private Collider _collider;
        
         private IPlayerDamageTarget _myTarget;
         private List<BaseUnitState> _allStates;
@@ -52,7 +54,11 @@ namespace Game.Runtime.Core.Enemies
         public void Init(IPlayerDamageTarget target) 
         {
             _myTarget = target;
+
+            Engine.Enabled();
             Health.Restore();    
+            
+            _collider.enabled = true;            
 
             _currentState = _allStates[0];
             _currentState.OnEnter();
@@ -66,9 +72,9 @@ namespace Game.Runtime.Core.Enemies
             {
                 OnDamageEvent?.Invoke();
                 return;
-            }
+            }           
 
-            OnDieEvent.Invoke(this);
+            OnDieEvent?.Invoke(this);
         }
 
         public void OnUpdate()
@@ -84,8 +90,10 @@ namespace Game.Runtime.Core.Enemies
         public void Stop()
         {
             _currentState?.OnExit();
-            Engine.Stop();
+            Engine.Disable();
             View.SetSpeed(0f);
+
+            _collider.enabled = false;
         }
 
         void IUnitSwitchContext.SwitchState<T>()
