@@ -1,4 +1,5 @@
 using Game.Runtime.Core.Damage;
+using Game.Runtime.Util.Extensions;
 
 namespace Game.Runtime.Core.FSM.Player.States
 {
@@ -66,7 +67,7 @@ namespace Game.Runtime.Core.FSM.Player.States
 
         private void AttackExecute()
         {
-            if (_currentTarget != null && _currentTarget.IsAlive)
+            if (_currentTarget != null && _currentTarget.IsAlive && IsTargetNear())
             {
                 _currentTarget.ApplyDamage(_agent.Config.Attack.Damage);
             }
@@ -80,7 +81,11 @@ namespace Game.Runtime.Core.FSM.Player.States
             _agent.View.RotateFromDirection(dir, _agent.Config.Rotation);
         }
 
-        
+        private bool IsTargetNear()
+        {
+            return _currentTarget.Position.GetSqrDistanceXZ(_agent.MyTransform.position) <= 
+                _agent.Config.Attack.Range * _agent.Config.Attack.Range;
+        }        
 
         private void OnDieState()
         {

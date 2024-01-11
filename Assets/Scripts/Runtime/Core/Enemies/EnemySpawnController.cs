@@ -68,7 +68,9 @@ namespace Game.Runtime.Core.Enemies
 
                 var enemy = GetUnit(prefab, pos);
 
-                enemy.DieEvent += OnUnitDie;
+                enemy.Init(_player);
+
+                enemy.OnDieEvent += OnUnitDie;
 
                 _units.Add(enemy);
             }
@@ -76,7 +78,7 @@ namespace Game.Runtime.Core.Enemies
 
         private void OnUnitDie(EnemyUnit unit)
         {
-            unit.DieEvent -= OnUnitDie;
+            unit.OnDieEvent -= OnUnitDie;
             _units.Remove(unit);
         }
 
@@ -117,6 +119,11 @@ namespace Game.Runtime.Core.Enemies
             _cts?.Cancel();
             _cts?.Dispose();
             _cts = null;    
+
+            foreach(var unit in _units.ToList())
+            {
+                unit?.Stop();
+            }
         }
 
         void ITickable.Tick()

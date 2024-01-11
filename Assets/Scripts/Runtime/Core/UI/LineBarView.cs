@@ -10,7 +10,7 @@ namespace Game.Runtime.Core.UI
         public void SetProgress(float normValue)
         {
             var value = Mathf.Clamp01(normValue);
-            _fill.fillAmount = normValue;
+            _fill.fillAmount = value;
         }
     }
 }

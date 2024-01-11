@@ -71,5 +71,10 @@ namespace Game.Runtime.Core.Components
         {
             _animator.SetTrigger(_animDamagePRM);
         }
+
+        internal void RotateFromDirection(Vector3 moveDirection, object rotation)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

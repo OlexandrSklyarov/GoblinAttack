@@ -15,23 +15,25 @@ namespace Game.Runtime.Core.Components
 
         private readonly Transform _owner;
         private readonly AttackConfig _attackConfig;
+        private readonly TargetScanConfig _scanConfig;
         private readonly Collider[] _results = new Collider[10]; 
         private List<IDamageTarget> _targets = new();
         private float _nextScanTime;
 
         public event Action<bool> ScanTargetResultEvent;
 
-        public TargetSensor(Transform owner, AttackConfig attackConfig)
+        public TargetSensor(Transform owner, AttackConfig attackConfig, TargetScanConfig scanConfig)
         {           
             _owner = owner;
             _attackConfig = attackConfig;
+            _scanConfig = scanConfig;
         }
         
         public void ScanTargets()
         {
             if (Time.time < _nextScanTime) return;
 
-            _nextScanTime = Time.time + _attackConfig.ScanTargetDelay;
+            _nextScanTime = Time.time + _scanConfig.ScanDelay;
 
             _targets.Clear();
 

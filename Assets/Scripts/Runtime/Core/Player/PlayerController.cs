@@ -49,7 +49,7 @@ namespace Game.Runtime.Core.Player
 
         private void Awake()
         {
-            _targetSensor = new TargetSensor(transform, Config.Attack);
+            _targetSensor = new TargetSensor(transform, Config.Attack, Config.Scan);
             _stats = new CharacterStats();
 
             BindEvents();

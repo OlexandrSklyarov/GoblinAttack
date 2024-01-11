@@ -19,6 +19,9 @@ MonoBehaviour:
     - {fileID: 11400000, guid: a3f0aa6a902a583d8b1be5cb7a1198b4, type: 2}
     - {fileID: 11400000, guid: 95383dc7b63a00ef48f454351ad0d1f7, type: 2}
     - {fileID: 11400000, guid: 11164fcaa7fdf18ae90043e95976a000, type: 2}
+    <SpawnRadius>k__BackingField:
+      _min: 15
+      _max: 25
   <UI>k__BackingField:
     <PCHudPrefab>k__BackingField: {fileID: 2394834069675515001, guid: c60892c45dda578bb8482d427cb84acb,
       type: 3}

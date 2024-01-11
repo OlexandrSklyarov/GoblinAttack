@@ -6,7 +6,8 @@ namespace Game.Runtime.Data.Configs
     [CreateAssetMenu(menuName = "SO/Enemy/EnemyUnitConfig", fileName = "EnemyUnitConfig")]
     public class EnemyUnitConfig : ScriptableObject
     {
-        [field: SerializeField, Min(1f)] public float Speed {get; private set;} = 5f;
-        [field: SerializeField, Min(1f)] public float AttackDuration {get; private set;} = 2f;
+        [field: SerializeField] public MovingConfig Moving {get; private set;}
+        [field: SerializeField] public RotationConfig Rotation {get; private set;}
+        [field: SerializeField] public AttackConfig Attack {get; private set;}
     }
 }
