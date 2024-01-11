@@ -14,6 +14,7 @@ namespace Game.Runtime.Core.FSM.Player
         EnemyUnitConfig Config { get; }      
         IPlayerDamageTarget MyTarget { get; }
         Transform MyTransform { get; }
+        bool IsAlive { get; }
 
         event Action<EnemyUnit> OnDieEvent;
         event Action OnDamageEvent;

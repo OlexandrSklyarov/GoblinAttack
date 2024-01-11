@@ -22,11 +22,11 @@ namespace Game.Runtime.Core.Player
         [field: SerializeField] public HealthComponent Health { get; private set; }
         public CharacterStats Stats => _stats;
         public TargetSensor TargetSensor => _targetSensor;
+        public bool IsAlive => Health.IsAlive;
 
         IInputService IPlayerAgent.Input => _input;
         Transform IPlayerAgent.MyTransform => transform;
         Vector3 IDamageTarget.Position => transform.position;
-        bool IDamageTarget.IsAlive => Health.IsAlive;
         bool IPlayerAgent.IsCanUseSpecialAttack => _stats.SpecialAttackCooldown <= 0f && _targetSensor.IsTargetExist;
 
         private IInputService _input;

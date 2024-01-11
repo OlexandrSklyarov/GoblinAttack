@@ -15,6 +15,7 @@ namespace GameRuntime.Data
             public const string SPECIAL_ATTACK = "SpecialAttack";
             public const string DIE = "Die";
             public const string DAMAGE = "Damage";
+            public const string IS_DEAD = "IsDead";
         }
     }
 }

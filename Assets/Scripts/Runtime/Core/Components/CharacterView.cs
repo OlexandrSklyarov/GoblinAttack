@@ -20,6 +20,7 @@ namespace Game.Runtime.Core.Components
         private int _animSpecialAttackPRM;
         private int _animDiePRM;
         private int _animDamagePRM;
+        private int _animIsDeadPRM;
 
         public event Action OnAttackExecuteEvent;
         public event Action OnAttackCompletedEvent;
@@ -32,6 +33,7 @@ namespace Game.Runtime.Core.Components
             _animSpecialAttackPRM = Animator.StringToHash(GameConstants.Animation.SPECIAL_ATTACK);    
             _animDiePRM = Animator.StringToHash(GameConstants.Animation.DIE);  
             _animDamagePRM = Animator.StringToHash(GameConstants.Animation.DAMAGE);  
+            _animIsDeadPRM = Animator.StringToHash(GameConstants.Animation.IS_DEAD); 
 
             _animationProvider.OnAttackExecuteEvent += () => OnAttackExecuteEvent?.Invoke();   
             _animationProvider.OnAttackCompleteEvent += () => OnAttackCompletedEvent?.Invoke();   
@@ -64,17 +66,13 @@ namespace Game.Runtime.Core.Components
 
         public void PlayDie()
         {
+            _animator.SetBool(_animIsDeadPRM, true);
             _animator.SetTrigger(_animDiePRM);
         }
 
         public void PlayDamage()
         {
             _animator.SetTrigger(_animDamagePRM);
-        }
-
-        internal void RotateFromDirection(Vector3 moveDirection, object rotation)
-        {
-            throw new NotImplementedException();
         }
     }
 }

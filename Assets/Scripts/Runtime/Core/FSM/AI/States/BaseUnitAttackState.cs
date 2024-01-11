@@ -11,6 +11,7 @@ namespace Game.Runtime.Core.FSM.Player.States
         public override void OnEnter()
         {         
             _agent.Engine.Stop();   
+            
             _agent.View.OnAttackExecuteEvent += AttackExecute;
             _agent.View.OnAttackCompletedEvent += AttackCompleted;
             _agent.OnDieEvent += OnDieState;

@@ -17,10 +17,10 @@ namespace Game.Runtime.Core.Enemies
         [field: SerializeField] public CharacterView View { get; private set; }
         [field: SerializeField] public EnemyUnitConfig Config { get; private set; }
         [field: SerializeField] public HealthComponent Health { get; private set; }
+        public bool IsAlive => Health.IsAlive;
 
         IPlayerDamageTarget IUnitAgent.MyTarget => _myTarget;
         Transform IUnitAgent.MyTransform => transform;
-        bool IDamageTarget.IsAlive => Health.IsAlive;
         Vector3 IDamageTarget.Position => transform.position;
        
         private IPlayerDamageTarget _myTarget;
@@ -74,7 +74,6 @@ namespace Game.Runtime.Core.Enemies
         public void OnUpdate()
         {                       
             _currentState?.OnUpdate(); 
-            Debug.Log($"{name} state: {_currentState}");
         }
 
         public void OnFixedUpdate()

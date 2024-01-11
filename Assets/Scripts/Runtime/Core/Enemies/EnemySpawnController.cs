@@ -114,16 +114,23 @@ namespace Game.Runtime.Core.Enemies
 
         public void StopSpawn()
         {
-            _isCanUpdateUnits = false;        
+            CancelSpawn();
 
-            _cts?.Cancel();
-            _cts?.Dispose();
-            _cts = null;    
-
-            foreach(var unit in _units.ToList())
+            foreach (var unit in _units.ToList())
             {
                 unit?.Stop();
             }
+
+            _units.Clear();
+        }
+
+        private void CancelSpawn()
+        {
+            _isCanUpdateUnits = false;
+
+            _cts?.Cancel();
+            _cts?.Dispose();
+            _cts = null;
         }
 
         void ITickable.Tick()
@@ -148,7 +155,7 @@ namespace Game.Runtime.Core.Enemies
 
         void IDisposable.Dispose()
         {
-            StopSpawn();
+            CancelSpawn();
         }
     }
 }

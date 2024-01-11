@@ -20,7 +20,10 @@ namespace Game.Runtime.Core.FSM.Player.States
 
         private void OnDamageCompleted()
         {
-            _context.SwitchState<PlayerIdleState>();
+            if (_agent.IsAlive)
+                _context.SwitchState<PlayerIdleState>();
+            else
+                _context.SwitchState<PlayerDieState>();
         }
     }
 }

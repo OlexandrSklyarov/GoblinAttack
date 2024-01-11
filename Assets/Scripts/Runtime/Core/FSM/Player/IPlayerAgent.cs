@@ -16,6 +16,7 @@ namespace Game.Runtime.Core.FSM.Player
         IInputService Input { get; }
         Transform MyTransform { get; }
         bool IsCanUseSpecialAttack { get; }
+        bool IsAlive { get; }
 
         event Action OnDieEvent;
         event Action OnDamageEvent;
