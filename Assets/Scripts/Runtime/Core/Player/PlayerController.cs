@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Game.Runtime.Core.Components;
 using Game.Runtime.Core.Damage;
+using Game.Runtime.Core.Enemies;
 using Game.Runtime.Core.FSM.Player;
 using Game.Runtime.Core.FSM.Player.States;
 using Game.Runtime.Data.Configs;
@@ -30,6 +31,7 @@ namespace Game.Runtime.Core.Player
         bool IPlayerAgent.IsCanUseSpecialAttack => _stats.SpecialAttackCooldown <= 0f && _targetSensor.IsTargetExist;
 
         private IInputService _input;
+        private IObjectResolver _resolver;
         private CharacterStats _stats;
         private TargetSensor _targetSensor;
         private List<BasePlayerState> _allStates;
@@ -42,15 +44,19 @@ namespace Game.Runtime.Core.Player
         public event Action<bool> ChangeSpecialAttackStatusEvent;
 
         [Inject]
-        private void Construct(IInputService input)
+        private void Construct(IInputService input, IObjectResolver resolver)
         {
             _input = input;
+            _resolver = resolver;            
         }
 
-        private void Awake()
+        private void Start()
         {
+            var killEnemyInfo = _resolver.Resolve<IEnemyKillInfo>();
+            killEnemyInfo.EnemyKilledEvent += (rewardPoints) => Health.Value += rewardPoints;
+
             _targetSensor = new TargetSensor(transform, Config.Attack, Config.Scan);
-            _stats = new CharacterStats();
+            _stats = new CharacterStats();            
 
             BindEvents();
             InitFSM();

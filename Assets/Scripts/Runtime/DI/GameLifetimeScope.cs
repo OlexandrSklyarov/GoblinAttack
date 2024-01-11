@@ -28,11 +28,13 @@ namespace Game.Runtime.DI
             builder.RegisterComponentInHierarchy<CinemachineVirtualCamera>()
                 .AsSelf();
 
-            builder.Register(container => container.Instantiate(_mainConfig.PlayerPrefab, _playerSpawnPoint), Lifetime.Singleton)
+            //enemy controller
+            builder.Register<EnemySpawnController>(Lifetime.Singleton)
                 .AsImplementedInterfaces()
                 .AsSelf();
 
-            builder.Register<EnemySpawnController>(Lifetime.Singleton)
+            //player
+            builder.Register(container => container.Instantiate(_mainConfig.PlayerPrefab, _playerSpawnPoint), Lifetime.Singleton)
                 .AsImplementedInterfaces()
                 .AsSelf();
 

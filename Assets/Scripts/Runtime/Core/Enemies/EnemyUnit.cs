@@ -18,6 +18,7 @@ namespace Game.Runtime.Core.Enemies
         [field: SerializeField] public EnemyUnitConfig Config { get; private set; }
         [field: SerializeField] public HealthComponent Health { get; private set; }
         public bool IsAlive => Health.IsAlive;
+        public int RewardPoints => Config.KillRewardPoints;
 
         IPlayerDamageTarget IUnitAgent.MyTarget => _myTarget;
         Transform IUnitAgent.MyTransform => transform;

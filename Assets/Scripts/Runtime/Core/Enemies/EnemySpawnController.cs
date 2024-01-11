@@ -11,7 +11,8 @@ using VContainer.Unity;
 
 namespace Game.Runtime.Core.Enemies
 {
-    public class EnemySpawnController : IEnemyWaveInfo, IDisposable, ITickable, IFixedTickable
+    public class EnemySpawnController : IDisposable, ITickable, IFixedTickable,
+        IEnemyWaveInfo, IEnemyKillInfo
     {
         private Vector3 Origin => _player.Position;
 
@@ -24,6 +25,7 @@ namespace Game.Runtime.Core.Enemies
 
         public event Action AllUnitsKillEvent;
         public event Action<int, int> ChangeWaveProgressEvent;
+        public event Action<int> EnemyKilledEvent;
 
         public EnemySpawnController(MainConfig config, IPlayerDamageTarget player)
         {
@@ -80,6 +82,8 @@ namespace Game.Runtime.Core.Enemies
         {
             unit.OnDieEvent -= OnUnitDie;
             _units.Remove(unit);
+
+            EnemyKilledEvent?.Invoke(unit.RewardPoints);
         }
 
         private EnemyUnit GetUnit(EnemyUnit prefab, Vector3 pos)
