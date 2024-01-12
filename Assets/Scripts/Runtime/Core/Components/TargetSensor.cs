@@ -50,7 +50,7 @@ namespace Game.Runtime.Core.Components
             {
                 _targets = _results.Where(x => x != null)
                     .Select(c => c.GetComponent<IDamageTarget>())
-                    .Where(t => t != null)
+                    .Where(t => t != null && t.IsAlive)
                     .OrderBy(t => _owner.position.GetDistanceXZ(t.Position))
                     .ToList();
             }
