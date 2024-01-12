@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d651c95052a64850b3854843cb158ff, type: 3}
   m_Name: CloneConfig
   m_EditorClassIdentifier: 
-  <UnitPrefab>k__BackingField: {fileID: 392849997087292769, guid: e5608af5e5c28c3ba8b5aea02b15cac0,
-    type: 3}
+  <Type>k__BackingField: 2
   <CloneCount>k__BackingField: 2

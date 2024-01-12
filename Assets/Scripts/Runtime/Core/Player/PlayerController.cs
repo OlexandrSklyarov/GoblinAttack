@@ -7,7 +7,7 @@ using Game.Runtime.Core.Enemies;
 using Game.Runtime.Core.FSM.Player;
 using Game.Runtime.Core.FSM.Player.States;
 using Game.Runtime.Data.Configs;
-using Game.Runtime.Services;
+using Game.Runtime.Services.Input;
 using UnityEngine;
 using VContainer;
 

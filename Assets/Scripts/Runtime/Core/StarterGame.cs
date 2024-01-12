@@ -5,6 +5,8 @@ using Game.Runtime.Core.Player;
 using Game.Runtime.Core.UI;
 using Game.Runtime.Data.Configs;
 using Game.Runtime.Services;
+using Game.Runtime.Services.Input;
+using Game.Runtime.Services.Scenes;
 using GameRuntime.Data;
 using UnityEngine;
 using VContainer;

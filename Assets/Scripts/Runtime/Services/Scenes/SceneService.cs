@@ -1,7 +1,7 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine.SceneManagement;
 
-namespace Game.Runtime.Services
+namespace Game.Runtime.Services.Scenes
 {
     public class SceneService : ISceneService
     {

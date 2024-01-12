@@ -878,6 +878,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: AttackButton
       objectReference: {fileID: 0}
+    - target: {fileID: 6274441030597005825, guid: ed019ddb19d90abf288225956103ae15,
+        type: 3}
+      propertyPath: m_ControlPath
+      value: <Gamepad>/buttonEast
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

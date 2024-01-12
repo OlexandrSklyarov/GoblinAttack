@@ -12,7 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e78296ea9843bb289e18ba91014d022, type: 3}
   m_Name: EnemyWave 2
   m_EditorClassIdentifier: 
-  <EnemyPrefabs>k__BackingField:
-  - {fileID: 392849997087292769, guid: b79d78372a40eb1dc83c3bbbe5b580e9, type: 3}
-  - {fileID: 392849997087292769, guid: 60b1f426ee0d44cfbbf3859f760e18c1, type: 3}
+  <EnemyTypes>k__BackingField: 0000000001000000
   <MaxCount>k__BackingField: 20

@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using Game.Runtime.Core.Components;
 using Game.Runtime.Core.Damage;
 using Game.Runtime.Core.FSM.Player;
 using Game.Runtime.Core.FSM.Player.States;
+using Game.Runtime.Core.Services.ObjectPool;
 using Game.Runtime.Data.Configs;
 using Game.Runtime.Util.Extensions;
 using NaughtyAttributes;
@@ -12,14 +14,15 @@ using UnityEngine;
 
 namespace Game.Runtime.Core.Enemies
 {
-    public class EnemyUnit : MonoBehaviour, IDamageTarget, IUnitAgent, IUnitSwitchContext
+    public class EnemyUnit : MonoBehaviour, IDamageTarget, IUnitAgent, IUnitSwitchContext,
+        IPoolableItem<EnemyUnit>
     {
         [field: SerializeField] public NavMeshMovingEngine Engine { get; private set; }
         [field: SerializeField] public CharacterView View { get; private set; }
         [field: SerializeField] public EnemyUnitConfig Config { get; private set; }
         
         public bool IsCreateClonesOnDeath => _isCreateClonesOnDeath;
-        public EnemyUnit ClonePrefab => _cloneConfig.UnitPrefab;
+        public UnitType CloneType => _cloneConfig.Type;
         public int CloneCount => _cloneConfig.CloneCount;
         public bool IsAlive => _health.IsAlive;
         public int RewardPoints => Config.KillRewardPoints;
@@ -36,6 +39,7 @@ namespace Game.Runtime.Core.Enemies
         private IPlayerDamageTarget _myTarget;
         private List<BaseUnitState> _allStates;
         private BaseUnitState _currentState;
+        private IPool<EnemyUnit> _pool;
 
         public event Action<EnemyUnit> OnDieEvent;
         public event Action OnDamageEvent;
@@ -87,6 +91,12 @@ namespace Game.Runtime.Core.Enemies
             OnDieEvent?.Invoke(this);
         }
 
+        async UniTaskVoid IUnitAgent.ReclaimAsync()
+        {
+            await UniTask.WaitForSeconds(2f);
+            _pool?.Reclaim(this);
+        }
+
         public void OnUpdate()
         {                       
             _currentState?.OnUpdate(); 
@@ -119,6 +129,11 @@ namespace Game.Runtime.Core.Enemies
         {
             return _myTarget.Position.GetSqrDistanceXZ(transform.position) <= 
                 Config.Attack.Range * Config.Attack.Range;
+        }
+
+        void IPoolableItem<EnemyUnit>.SetPool(IPool<EnemyUnit> pool)
+        {
+            _pool = pool;
         }
     }
 }

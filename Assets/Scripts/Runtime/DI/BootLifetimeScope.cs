@@ -1,6 +1,6 @@
 using VContainer;
 using VContainer.Unity;
-using Game.Runtime.Services;
+using Game.Runtime.Services.Scenes;
 
 namespace Game
 {

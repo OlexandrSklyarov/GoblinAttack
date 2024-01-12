@@ -81,7 +81,8 @@ namespace Game.Runtime.Core.FSM.Player.States
 
         private void TryApplyDamageOtherTargets(IDamageTarget excludeTarget)
         {
-            var targets = _agent.TargetSensor.FindTargetsInFront(excludeTarget, _agent.View.Forward, 60f);
+            var targets = _agent.TargetSensor.FindTargetsInFront(excludeTarget, _agent.View.Forward, 
+                _agent.Config.Attack.VisibleAngle);
             
             foreach (var target in targets)
             {
@@ -111,7 +112,8 @@ namespace Game.Runtime.Core.FSM.Player.States
 
         private void OnDamageState()
         {
-            _context.SwitchState<PlayerDamageState>();
+            //Uncomment if you need to move into damage when attacking.
+            //_context.SwitchState<PlayerDamageState>();
         }
     }
 }

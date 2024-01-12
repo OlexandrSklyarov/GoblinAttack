@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using Game.Runtime.Core.Components;
 using Game.Runtime.Core.Damage;
 using Game.Runtime.Core.Enemies;
@@ -20,5 +21,6 @@ namespace Game.Runtime.Core.FSM.Player
         event Action OnDamageEvent;
 
         bool IsTargetNear();
+        UniTaskVoid ReclaimAsync();
     }
 }

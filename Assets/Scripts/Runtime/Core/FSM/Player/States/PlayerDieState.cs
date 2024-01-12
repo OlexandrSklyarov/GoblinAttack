@@ -10,6 +10,6 @@ namespace Game.Runtime.Core.FSM.Player.States
         public override void OnEnter()
         {
             _agent.View.PlayDie();
-        }
+        }        
     }
 }

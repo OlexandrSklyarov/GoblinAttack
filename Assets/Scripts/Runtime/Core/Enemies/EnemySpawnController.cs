@@ -5,6 +5,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using Game.Runtime.Core.Damage;
 using Game.Runtime.Data.Configs;
+using Game.Runtime.Services.Factories;
 using Game.Runtime.Util.Extensions;
 using UnityEngine;
 using VContainer.Unity;
@@ -18,6 +19,7 @@ namespace Game.Runtime.Core.Enemies
 
         private readonly MainConfig _config;
         private readonly IPlayerDamageTarget _player;
+        private readonly IUnitFactory _unitFactory;
         private readonly List<EnemyUnit> _units = new();
         private bool _isCanUpdateUnits;
         private CancellationTokenSource _cts;
@@ -27,10 +29,11 @@ namespace Game.Runtime.Core.Enemies
         public event Action<int, int> ChangeWaveProgressEvent;
         public event Action<int> EnemyKilledEvent;
 
-        public EnemySpawnController(MainConfig config, IPlayerDamageTarget player)
+        public EnemySpawnController(MainConfig config, IPlayerDamageTarget player, IUnitFactory unitFactory)
         {
             _config = config;
             _player = player;
+            _unitFactory = unitFactory;
         }        
 
         public async void StartSpawnAsync()
@@ -66,7 +69,7 @@ namespace Game.Runtime.Core.Enemies
 
                 if (token.IsCancellationRequested) return;
 
-                var prefab = wave.EnemyPrefabs.RandomElement();
+                var prefab = wave.EnemyTypes.RandomElement();
 
                 var enemy = GetUnit(prefab, pos);
 
@@ -98,13 +101,13 @@ namespace Game.Runtime.Core.Enemies
         {
             if (unit.IsCreateClonesOnDeath)
             {
-                var prefab = unit.ClonePrefab;
+                var cloneType = unit.CloneType;
                 var positions = GetClonePosition(unit.transform.position, unit.CloneCount);
 
                 for (int i = 0; i < unit.CloneCount; i++)
                 {
                     var pos = positions[i];
-                    var enemy = GetUnit(prefab, pos);
+                    var enemy = GetUnit(cloneType, pos);
                     enemy.Init(_player);
 
                     RegisterUnits(enemy);
@@ -125,9 +128,9 @@ namespace Game.Runtime.Core.Enemies
             return positions;
         }
 
-        private EnemyUnit GetUnit(EnemyUnit prefab, Vector3 pos)
+        private EnemyUnit GetUnit(UnitType type, Vector3 pos)
         {
-            return UnityEngine.Object.Instantiate(prefab, pos, Quaternion.identity);
+            return _unitFactory.CreateUnit(type, pos, Quaternion.identity);
         }
 
         private async UniTask<Vector3> GetRandomPositionAsync(Vector3 origin, CancellationToken token)

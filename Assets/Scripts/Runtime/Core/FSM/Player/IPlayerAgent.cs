@@ -1,7 +1,7 @@
 using System;
 using Game.Runtime.Core.Components;
 using Game.Runtime.Data.Configs;
-using Game.Runtime.Services;
+using Game.Runtime.Services.Input;
 using UnityEngine;
 
 namespace Game.Runtime.Core.FSM.Player

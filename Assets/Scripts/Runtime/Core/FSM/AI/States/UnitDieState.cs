@@ -1,3 +1,4 @@
+
 namespace Game.Runtime.Core.FSM.Player.States
 {
     public class UnitDieState : BaseUnitState
@@ -10,6 +11,7 @@ namespace Game.Runtime.Core.FSM.Player.States
         {
             _agent.Engine.Stop();
             _agent.View.PlayDie();
+            _agent.ReclaimAsync();
         }
     }
 }

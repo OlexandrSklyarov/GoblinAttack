@@ -2,20 +2,20 @@ using UnityEngine;
 
 namespace Game.Runtime.Services.Input
 {
-    public class DeviceInput : IInputService
+    public class KeyboardAndMouseInput : IInputService
     {
-        Vector2 IInputService.Movement => _inputAction.Mobile.Move.ReadValue<Vector2>();
-        bool IInputService.IsAttack => _inputAction.Mobile.Fire.WasPressedThisFrame();
-        bool IInputService.IsSpecialAttack => _inputAction.Mobile.Fire2.WasPressedThisFrame();
+        Vector2 IInputService.Movement => _inputAction.PC.Move.ReadValue<Vector2>();
+        bool IInputService.IsAttack => _inputAction.PC.Fire.WasPressedThisFrame();
+        bool IInputService.IsSpecialAttack => _inputAction.PC.Fire2.WasPressedThisFrame();
 
         private readonly PlayerInputActions _inputAction;
 
 
-        public DeviceInput()
+        public KeyboardAndMouseInput()
         {
             _inputAction = new PlayerInputActions();
             _inputAction.Enable();
-            _inputAction.PC.Disable();
+            _inputAction.Mobile.Disable();
         }
 
         void IInputService.Enable()

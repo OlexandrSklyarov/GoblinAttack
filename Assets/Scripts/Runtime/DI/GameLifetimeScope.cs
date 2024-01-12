@@ -1,8 +1,12 @@
+using System;
 using Cinemachine;
 using Game.Runtime.Core.Enemies;
 using Game.Runtime.Core.UI;
 using Game.Runtime.Data.Configs;
-using Game.Runtime.Services;
+using Game.Runtime.Services.Factories;
+using Game.Runtime.Services.Input;
+using Game.Runtime.Services.Scenes;
+using SA.Runtime.Core.Services.Factories;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -22,8 +26,10 @@ namespace Game.Runtime.DI
             builder.RegisterInstance(_mainConfig);
             
             builder.Register<ISceneService, SceneService>(Lifetime.Scoped);
-            builder.Register<IObjectResolver, Container>(Lifetime.Singleton);
-            builder.Register<IInputService, DeviceInput>(Lifetime.Singleton);
+            builder.Register<IObjectResolver, Container>(Lifetime.Singleton);            
+            builder.Register<IUnitFactory, UnitFactory>(Lifetime.Singleton);
+
+            RegisterInput(builder);
 
             builder.RegisterComponentInHierarchy<CinemachineVirtualCamera>()
                 .AsSelf();
@@ -39,7 +45,22 @@ namespace Game.Runtime.DI
                 .AsSelf();
 
             RegisterHUD(builder);
-        }       
+        }
+
+        private void RegisterInput(IContainerBuilder builder)
+        {            
+            //mobile or game
+        #if UNITY_EDITOR || UNITY_ANDROID
+
+            builder.Register<IInputService, DeviceInput>(Lifetime.Singleton);        
+        
+        //pc interface
+        #elif UNITY_STANDALONE
+
+            builder.Register<IInputService, KeyboardAndMouseInput>(Lifetime.Singleton);     
+                    
+        #endif  
+        }
 
         private void RegisterHUD(IContainerBuilder builder)
         {
@@ -47,30 +68,25 @@ namespace Game.Runtime.DI
                 .AsImplementedInterfaces()
                 .AsSelf();
 
-
-        // #if UNITY_EDITOR || UNITY_STANDALONE
-
-        //     _mobileHud.Hide();
-
-        //     builder.RegisterComponent(_pcHud)
-        //         .AsImplementedInterfaces()
-        //         .AsSelf();
-        
-        // #elif UNITY_ANDROID
-
-        //     _pcHud.Hide();
-
-        //     builder.RegisterComponent(_mobileHud)
-        //         .AsImplementedInterfaces()
-        //         .AsSelf();
-            
-        // #endif
+            //mobile interface
+        #if UNITY_EDITOR || UNITY_ANDROID
 
             _pcHud.Hide();
 
             builder.RegisterComponent(_mobileHud)
                 .AsImplementedInterfaces()
-                .AsSelf();
+                .AsSelf();        
+        
+            //pc interface
+        #elif UNITY_STANDALONE
+
+            _mobileHud.Hide();
+
+            builder.RegisterComponent(_pcHud)
+                .AsImplementedInterfaces()
+                .AsSelf();        
+                    
+        #endif            
         }
     }
 }

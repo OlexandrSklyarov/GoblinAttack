@@ -1,6 +1,6 @@
 using Cysharp.Threading.Tasks;
 
-namespace Game.Runtime.Services
+namespace Game.Runtime.Services.Scenes
 {
     public interface ISceneService
     {

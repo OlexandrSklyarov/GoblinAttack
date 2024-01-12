@@ -8,6 +8,7 @@ namespace Game.Runtime.Data.Configs
     {
         [field: SerializeField, Min(1f)] public float Damage {get; private set;} = 10f;
         [field: SerializeField, Min(1f)] public float Range {get; private set;} = 2f;
+        [field: SerializeField, Min(1f)] public float VisibleAngle {get; private set;} = 70f;
         [field: SerializeField] public LayerMask TargetLayer {get; private set;}
     }
 }

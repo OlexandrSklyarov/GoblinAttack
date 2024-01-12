@@ -22,6 +22,17 @@ MonoBehaviour:
     <SpawnRadius>k__BackingField:
       _min: 15
       _max: 25
+  <Factory>k__BackingField:
+    <Units>k__BackingField:
+    - <Type>k__BackingField: 0
+      <UnitPrefab>k__BackingField: {fileID: 392849997087292769, guid: b79d78372a40eb1dc83c3bbbe5b580e9,
+        type: 3}
+    - <Type>k__BackingField: 1
+      <UnitPrefab>k__BackingField: {fileID: 392849997087292769, guid: 60b1f426ee0d44cfbbf3859f760e18c1,
+        type: 3}
+    - <Type>k__BackingField: 2
+      <UnitPrefab>k__BackingField: {fileID: 392849997087292769, guid: e5608af5e5c28c3ba8b5aea02b15cac0,
+        type: 3}
   <UI>k__BackingField:
     <PCHudPrefab>k__BackingField: {fileID: 2394834069675515001, guid: c60892c45dda578bb8482d427cb84acb,
       type: 3}
