@@ -72,10 +72,16 @@ namespace Game.Runtime.Core.Enemies
 
                 enemy.Init(_player);
 
-                enemy.OnDieEvent += OnUnitDie;
+                RegisterUnits(enemy);
 
-                _units.Add(enemy);
+                await UniTask.WaitForSeconds(0.3f);
             }
+        }
+
+        private void RegisterUnits(EnemyUnit enemy)       
+        {            
+            enemy.OnDieEvent += OnUnitDie;
+            _units.Add(enemy);
         }
 
         private void OnUnitDie(EnemyUnit unit)
@@ -84,6 +90,39 @@ namespace Game.Runtime.Core.Enemies
             _units.Remove(unit);
 
             EnemyKilledEvent?.Invoke(unit.RewardPoints);
+
+            TryClonedUnit(unit);
+        }
+
+        private void TryClonedUnit(EnemyUnit unit)
+        {
+            if (unit.IsCreateClonesOnDeath)
+            {
+                var prefab = unit.ClonePrefab;
+                var positions = GetClonePosition(unit.transform.position, unit.CloneCount);
+
+                for (int i = 0; i < unit.CloneCount; i++)
+                {
+                    var pos = positions[i];
+                    var enemy = GetUnit(prefab, pos);
+                    enemy.Init(_player);
+
+                    RegisterUnits(enemy);
+                }
+            }
+        }
+
+        private Vector3[] GetClonePosition(Vector3 originPosition, int cloneCount)
+        {
+            var positions = new Vector3[cloneCount];
+            for (int i = 0; i < cloneCount; i++)
+            {
+                var rndDir = UnityEngine.Random.insideUnitSphere * 2f;
+                rndDir.y = 0f;
+                positions[i] = originPosition + rndDir;
+            }
+
+            return positions;
         }
 
         private EnemyUnit GetUnit(EnemyUnit prefab, Vector3 pos)

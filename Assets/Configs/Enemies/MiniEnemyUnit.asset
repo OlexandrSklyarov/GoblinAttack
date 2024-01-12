@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6660cecdcac75b7ab9cc0ac9866f504a, type: 3}
-  m_Name: SimpleEnemyUnitConfig
+  m_Name: MiniEnemyUnit
   m_EditorClassIdentifier: 
-  <MaxHealth>k__BackingField: 20
+  <MaxHealth>k__BackingField: 10
   <Moving>k__BackingField:
     <Acceleration>k__BackingField: 20
     <MaxSpeed>k__BackingField: 1.5
@@ -20,7 +20,7 @@ MonoBehaviour:
     <Time>k__BackingField: 0.1
     <Speed>k__BackingField: 900
   <Attack>k__BackingField:
-    <Damage>k__BackingField: 2
+    <Damage>k__BackingField: 1
     <Range>k__BackingField: 1.5
     <TargetLayer>k__BackingField:
       serializedVersion: 2

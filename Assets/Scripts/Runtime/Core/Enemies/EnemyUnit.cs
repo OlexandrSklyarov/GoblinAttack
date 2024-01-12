@@ -7,6 +7,7 @@ using Game.Runtime.Core.FSM.Player;
 using Game.Runtime.Core.FSM.Player.States;
 using Game.Runtime.Data.Configs;
 using Game.Runtime.Util.Extensions;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace Game.Runtime.Core.Enemies
@@ -16,8 +17,11 @@ namespace Game.Runtime.Core.Enemies
         [field: SerializeField] public NavMeshMovingEngine Engine { get; private set; }
         [field: SerializeField] public CharacterView View { get; private set; }
         [field: SerializeField] public EnemyUnitConfig Config { get; private set; }
-        [field: SerializeField] public HealthComponent Health { get; private set; }
-        public bool IsAlive => Health.IsAlive;
+        
+        public bool IsCreateClonesOnDeath => Config.Clone.IsCreateClonesOnDeath;
+        public EnemyUnit ClonePrefab => Config.Clone.UnitPrefab;
+        public int CloneCount => Config.Clone.CloneCount;
+        public bool IsAlive => _health.IsAlive;
         public int RewardPoints => Config.KillRewardPoints;
 
         IPlayerDamageTarget IUnitAgent.MyTarget => _myTarget;
@@ -26,6 +30,7 @@ namespace Game.Runtime.Core.Enemies
 
         [SerializeField] private Collider _collider;
        
+        private HealthComponent _health;
         private IPlayerDamageTarget _myTarget;
         private List<BaseUnitState> _allStates;
         private BaseUnitState _currentState;
@@ -35,6 +40,8 @@ namespace Game.Runtime.Core.Enemies
 
         private void Awake() 
         {
+            _health = new HealthComponent(Config.MaxHealth); 
+
             Engine.Init(Config.Moving);
 
             InitFSM();
@@ -57,7 +64,7 @@ namespace Game.Runtime.Core.Enemies
             _myTarget = target;
 
             Engine.Enabled();
-            Health.Restore();    
+            _health.Restore();    
             
             _collider.enabled = true;            
 
@@ -67,9 +74,9 @@ namespace Game.Runtime.Core.Enemies
 
         void IDamageTarget.ApplyDamage(float damage)
         {
-            Health.Value -= damage;
+            _health.Value -= damage;
 
-            if (Health.IsAlive)
+            if (_health.IsAlive)
             {
                 OnDamageEvent?.Invoke();
                 return;

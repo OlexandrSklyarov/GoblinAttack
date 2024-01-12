@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6660cecdcac75b7ab9cc0ac9866f504a, type: 3}
-  m_Name: SimpleEnemyUnitConfig
+  m_Name: ClonableEnemyUnitConfig
   m_EditorClassIdentifier: 
   <MaxHealth>k__BackingField: 20
   <Moving>k__BackingField:
@@ -26,7 +26,8 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 64
   <Clone>k__BackingField:
-    _isCreateClonesOnDeath: 0
-    _unitPrefab: {fileID: 0}
-    _cloneCount: 0
+    _isCreateClonesOnDeath: 1
+    _unitPrefab: {fileID: 392849997087292769, guid: e5608af5e5c28c3ba8b5aea02b15cac0,
+      type: 3}
+    _cloneCount: 2
   <KillRewardPoints>k__BackingField: 2

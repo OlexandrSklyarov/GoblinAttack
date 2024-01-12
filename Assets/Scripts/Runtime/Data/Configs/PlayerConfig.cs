@@ -6,6 +6,7 @@ namespace Game.Runtime.Data.Configs
     [CreateAssetMenu(menuName = "SO/Payer/PlayerConfig", fileName = "PlayerConfig")]
     public class PlayerConfig : ScriptableObject
     {
+        [field: SerializeField, Min(1)] public int MaxHealth {get; private set;} = 100;
         [field: SerializeField] public MovingConfig Moving {get; private set;}
         [field: Space, SerializeField] public RotationConfig Rotation {get; private set;}
         [field: Space, SerializeField] public AttackConfig Attack {get; private set;}

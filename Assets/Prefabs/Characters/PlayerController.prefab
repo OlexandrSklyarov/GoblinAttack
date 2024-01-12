@@ -45,7 +45,6 @@ GameObject:
   - component: {fileID: 7838424191186095305}
   - component: {fileID: 1576735559216766148}
   - component: {fileID: 5511533379082469265}
-  - component: {fileID: 7596369789816290121}
   m_Layer: 6
   m_Name: PlayerController
   m_TagString: Untagged
@@ -137,7 +136,6 @@ MonoBehaviour:
   <View>k__BackingField: {fileID: 5511533379082469265}
   <Config>k__BackingField: {fileID: 11400000, guid: fca6e311126b62910a2f54bfab9a0e72,
     type: 2}
-  <Health>k__BackingField: {fileID: 7596369789816290121}
 --- !u!114 &1576735559216766148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,19 +163,6 @@ MonoBehaviour:
   _body: {fileID: 680777581661742705}
   _animator: {fileID: 7491905497477139211}
   _animationProvider: {fileID: 1579502974823584157}
---- !u!114 &7596369789816290121
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3577362438017258496}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63a95dd1a363248a18b10fa93f229ab4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _maxHP: 100
 --- !u!1001 &8841981126309943994
 PrefabInstance:
   m_ObjectHideFlags: 0

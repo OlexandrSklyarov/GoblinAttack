@@ -20,10 +20,9 @@ namespace Game.Runtime.Core.Player
         [field: SerializeField] public PhysicsMovingEngine Engine { get; private set; }
         [field: SerializeField] public CharacterView View { get; private set; }
         [field: SerializeField] public PlayerConfig Config { get; private set; }
-        [field: SerializeField] public HealthComponent Health { get; private set; }
         public CharacterStats Stats => _stats;
         public TargetSensor TargetSensor => _targetSensor;
-        public bool IsAlive => Health.IsAlive;
+        public bool IsAlive => _health.IsAlive;
 
         IInputService IPlayerAgent.Input => _input;
         Transform IPlayerAgent.MyTransform => transform;
@@ -36,6 +35,7 @@ namespace Game.Runtime.Core.Player
         private TargetSensor _targetSensor;
         private List<BasePlayerState> _allStates;
         private BasePlayerState _currentState;
+        private HealthComponent _health;
 
         public event Action OnDieEvent;
         public event Action OnDamageEvent;
@@ -53,10 +53,11 @@ namespace Game.Runtime.Core.Player
         private void Start()
         {
             var killEnemyInfo = _resolver.Resolve<IEnemyKillInfo>();
-            killEnemyInfo.EnemyKilledEvent += (rewardPoints) => Health.Value += rewardPoints;
+            killEnemyInfo.EnemyKilledEvent += (rewardPoints) => _health.Value += rewardPoints;
 
             _targetSensor = new TargetSensor(transform, Config.Attack, Config.Scan);
-            _stats = new CharacterStats();            
+            _stats = new CharacterStats();   
+            _health = new HealthComponent(Config.MaxHealth);         
 
             BindEvents();
             InitFSM();
@@ -65,7 +66,7 @@ namespace Game.Runtime.Core.Player
         private void BindEvents()
         {
             _stats.RestoreSpecialAttackEvent += (v) => RestoreSpecialAttackEvent?.Invoke(v);
-            Health.ChangeValueEvent += (cur, max) => ChangedHealthEvent?.Invoke(cur / max);
+            _health.ChangeValueEvent += (cur, max) => ChangedHealthEvent?.Invoke(cur / max);
             _targetSensor.ScanTargetResultEvent += (isActive) => ChangeSpecialAttackStatusEvent?.Invoke(isActive);
         }
 
@@ -108,9 +109,9 @@ namespace Game.Runtime.Core.Player
        
         void IDamageTarget.ApplyDamage(float damage)
         {
-            Health.Value -= damage;
+            _health.Value -= damage;
 
-            if (Health.IsAlive)
+            if (_health.IsAlive)
             {
                 OnDamageEvent?.Invoke();
                 return;

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game.Runtime.Core.Components
 {
-    public class HealthComponent : MonoBehaviour
+    public class HealthComponent
     {
         public bool IsAlive => _currentHP > 0;
 
@@ -17,16 +17,17 @@ namespace Game.Runtime.Core.Components
             }          
         }
 
-        [SerializeField] private float _maxHP = 100;                    
+        private float _maxHP = 100;                    
 
         private float _currentHP;
 
         public event Action<float, float> ChangeValueEvent;
 
-        private void Awake() 
+        public HealthComponent(int maxHP)
         {
+            _maxHP = maxHP;
             Restore();
-        }
+        }       
 
         public void Restore() => _currentHP = _maxHP; 
 
