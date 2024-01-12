@@ -18,9 +18,9 @@ namespace Game.Runtime.Core.Enemies
         [field: SerializeField] public CharacterView View { get; private set; }
         [field: SerializeField] public EnemyUnitConfig Config { get; private set; }
         
-        public bool IsCreateClonesOnDeath => Config.Clone.IsCreateClonesOnDeath;
-        public EnemyUnit ClonePrefab => Config.Clone.UnitPrefab;
-        public int CloneCount => Config.Clone.CloneCount;
+        public bool IsCreateClonesOnDeath => _isCreateClonesOnDeath;
+        public EnemyUnit ClonePrefab => _cloneConfig.UnitPrefab;
+        public int CloneCount => _cloneConfig.CloneCount;
         public bool IsAlive => _health.IsAlive;
         public int RewardPoints => Config.KillRewardPoints;
 
@@ -29,6 +29,8 @@ namespace Game.Runtime.Core.Enemies
         Vector3 IDamageTarget.Position => transform.position;
 
         [SerializeField] private Collider _collider;
+        [Space, SerializeField] private bool _isCreateClonesOnDeath;
+        [ShowIf("_isCreateClonesOnDeath"), SerializeField] private CloneConfig _cloneConfig;
        
         private HealthComponent _health;
         private IPlayerDamageTarget _myTarget;

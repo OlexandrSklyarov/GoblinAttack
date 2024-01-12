@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d651c95052a64850b3854843cb158ff, type: 3}
+  m_Name: CloneConfig
+  m_EditorClassIdentifier: 
+  <UnitPrefab>k__BackingField: {fileID: 392849997087292769, guid: e5608af5e5c28c3ba8b5aea02b15cac0,
+    type: 3}
+  <CloneCount>k__BackingField: 2
