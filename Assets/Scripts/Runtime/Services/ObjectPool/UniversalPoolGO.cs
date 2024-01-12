@@ -20,19 +20,20 @@ namespace Game.Runtime.Core.Services.ObjectPool
             );            
         }
 
-        private void OnDestroyItem(T decal)
+        private void OnDestroyItem(T item)
         {
-            UnityEngine.Object.Destroy(decal.gameObject);
+            if (item == null) return;
+            UnityEngine.Object.Destroy(item.gameObject);
         }
 
-        private void OnReturnItem(T decal)
+        private void OnReturnItem(T item)
         {
-            decal.gameObject.SetActive(false);
+            item.gameObject.SetActive(false);
         }
 
-        private void OnTakeItem(T decal)
+        private void OnTakeItem(T item)
         {
-            decal.gameObject.SetActive(true);
+            item.gameObject.SetActive(true);
         }
 
         private T OnCreateItem()
@@ -49,7 +50,7 @@ namespace Game.Runtime.Core.Services.ObjectPool
 
         public void Clear()
         {
-            _innerPool.Clear();
+            _innerPool?.Clear();
         }
 
         void IPool<T>.Reclaim(IPoolableItem<T> item) => _innerPool.Release(item as T);

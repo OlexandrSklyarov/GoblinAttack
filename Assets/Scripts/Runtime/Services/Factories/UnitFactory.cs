@@ -51,6 +51,8 @@ namespace SA.Runtime.Core.Services.Factories
             {
                 pool.Value.Clear();
             }
+
+            _enemyUnitPools.Clear();
         }
     }
 }

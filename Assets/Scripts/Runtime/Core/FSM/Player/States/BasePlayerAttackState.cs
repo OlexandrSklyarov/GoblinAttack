@@ -112,8 +112,8 @@ namespace Game.Runtime.Core.FSM.Player.States
 
         private void OnDamageState()
         {
-            //Uncomment if you need to move into damage when attacking.
-            //_context.SwitchState<PlayerDamageState>();
+            if (_agent.Config.IsPlayDamageAnimation)
+            _context.SwitchState<PlayerDamageState>();
         }
     }
 }
